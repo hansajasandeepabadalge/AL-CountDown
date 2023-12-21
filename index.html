@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #video-background {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+    }
+
+    #content {
+      z-index: 1;
+      padding: 10px; /* Adjusted padding for smaller screens */
+      text-align: center;
+      color: white;
+    }
+
+    #countdown {
+      font-size: 2em; /* Adjusted font size for smaller screens */
+      margin-bottom: 5px; /* Adjusted margin for smaller screens */
+      text-shadow: 1px 1px 1px black; /* Reduced text-shadow for better visibility */
+    }
+
+    #examText, #wishText {
+      font-size: 1.5em; /* Adjusted font size for smaller screens */
+      margin-top: 5px; /* Adjusted margin for smaller screens */
+      text-shadow: 1px 1px 1px black; /* Reduced text-shadow for better visibility */
+    }
+
+    #wishText {
+      font-size: 1.2em; /* Adjusted font size for smaller screens */
+    }
+
+    /* Style the "D H M S" letters */
+    #countdown span {
+      color: #f8d63c; /* Set the color to yellow */
+    }
+
+    /* Style for "Crafted By Mr. MegaDev" */
+    #credit {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-weight: bold;
+      font-size: 10px;
+      text-shadow: 2px 2px 2px black;
+    }
+
+    /* Responsive styles for smaller screens (phones) */
+    @media only screen and (max-width: 600px) {
+      #countdown {
+        font-size: 1.8em; /* Further reduced font size for smaller screens */
+      }
+
+      #examText, #wishText {
+        font-size: 1.2em; /* Further reduced font size for smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<video id="video-background" autoplay loop muted>
+  <source src="Background.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<div id="content">
+  <div id="countdown"></div>
+  <div id="examText">Left for A/L Exam</div>
+  <div id="wishText">Best of luck for your exams!</div>
+</div>
+
+<!-- "Crafted By Mr. MegaDev" credit -->
+<div id="credit">Crafted By <span style="color: #f8d63c;">Mr.MegaDev</span></div>
+
+<script>
+  // Set the date we're counting down to
+  const countDownDate = new Date("January 4, 2024 08:30:00").getTime();
+
+  // Update the countdown every 1 second
+  const x = setInterval(function() {
+    // Get the current date and time
+    const now = new Date().getTime();
+
+    // Calculate the remaining time
+    const distance = countDownDate - now;
+
+    // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the countdown
+    document.getElementById("countdown").innerHTML = `<span>${days}</span>D <span>${hours}</span>H <span>${minutes}</span>M <span>${seconds}</span>S`;
+
+    // If the countdown is over, display a message
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countdown").innerHTML = "EXPIRED";
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>
