@@ -15,6 +15,14 @@
       margin: 0;
       overflow: hidden;
       position: relative;
+      opacity: 0; /* Set initial opacity to 0 */
+      animation: fadeIn 1s forwards; /* Use CSS animation for fading in */
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1; /* Fade in to full opacity */
+      }
     }
 
     #video-background {
@@ -97,10 +105,41 @@
 <div id="credit">Crafted By <span style="color: #f8d63c;">Mr.MegaDev</span></div>
 
 <script>
-  // Set the date we're counting down to
-  const countDownDate = new Date("January 4, 2024 08:30:00").getTime();
+  // Function to start a new countdown
+  function startNewCountdown() {
+    // Set the date for the new countdown
+    const newCountDownDate = new Date("January 31, 2024 16:10:00").getTime();
 
-  // Update the countdown every 1 second
+    // Update the countdown every 1 second
+    const newX = setInterval(function() {
+      // Get the current date and time
+      const now = new Date().getTime();
+
+      // Calculate the remaining time
+      const newDistance = newCountDownDate - now;
+
+      // Calculate days, hours, minutes, and seconds
+      const newDays = Math.floor(newDistance / (1000 * 60 * 60 * 24));
+      const newHours = Math.floor((newDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const newMinutes = Math.floor((newDistance % (1000 * 60 * 60)) / (1000 * 60));
+      const newSeconds = Math.floor((newDistance % (1000 * 60)) / 1000);
+
+      // Display the new countdown
+      document.getElementById("countdown").innerHTML = `<span>${newDays}</span>D <span>${newHours}</span>H <span>${newMinutes}</span>M <span>${newSeconds}</span>S`;
+
+      // If the new countdown is over, display a message
+      if (newDistance < 0) {
+        clearInterval(newX);
+        document.getElementById("examText").innerHTML = ""; // Remove "Exam Time"
+        document.getElementById("countdown").innerHTML = "🎉 Exam Ends 🎉";
+      }
+    }, 1000);
+  }
+
+  // Set the date for the initial countdown
+  const countDownDate = new Date("January 04, 2024 08:30:00").getTime();
+
+  // Update the initial countdown every 1 second
   const x = setInterval(function() {
     // Get the current date and time
     const now = new Date().getTime();
@@ -114,16 +153,19 @@
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the countdown
+    // Display the initial countdown
     document.getElementById("countdown").innerHTML = `<span>${days}</span>D <span>${hours}</span>H <span>${minutes}</span>M <span>${seconds}</span>S`;
 
-    // If the countdown is over, display a message
+    // If the initial countdown is over, start a new countdown
     if (distance < 0) {
       clearInterval(x);
-      document.getElementById("countdown").innerHTML = "EXPIRED";
+      document.getElementById("examText").innerHTML = "Exam time"; // Change the text
+      // Start a new countdown
+      startNewCountdown();
     }
   }, 1000);
 </script>
+
 
 </body>
 </html>
